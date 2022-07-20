@@ -30,13 +30,20 @@ function getUserRepos(user) {
     .then(function (response) {
       //request was successful
       if (response.ok) {
-        console.log(response);
+        // console.log(response);
         response.json().then(function (data) {
-          console.log(data);
+          // console.log(data);
           displayRepos(data, user);
-        });
+          // check if api has paginated issues
+          if(response.headers.get("Link")){
+            dispalyWarning(repo);
+
+          }
+        })
       } else {
-        alert("Error:Github User Not Found");
+          // if not succesful, redirect to homepage
+          // document.location.replace("index.html");
+        // alert("Error:Github User Not Found");
       }
     }).catch(function(){
       alert("Unable to connect to Github");
@@ -47,7 +54,10 @@ getUserRepos("");
 
 // add event listeners to forms
 userFormEl.addEventListener("submit", formSubmitHandler);
+
+
 // Data will be send from getUserRepos() to displayRepos()
+
 var displayRepos = function (repos, searchTerm) {
   // check if api returned any repos
   if (repos.length === 0) {
@@ -66,9 +76,10 @@ var displayRepos = function (repos, searchTerm) {
     //  format for repo name
     var repoName = repos[i].owner.login + "/" + repos[i].name;
 
-    //creat a container for each repo
-    var repoEl = document.createElement("div");
+    //creat a container for each repo with a link . that will nevigate to the next page.
+    var repoEl = document.createElement("a");
     repoEl.classList = "list-item flex-row justify-space-between align-center";
+    repoEl.setAttribute("href", "single-repo.html?repo=" + repoName);
 
     //creat a span element to hold repository name
 
