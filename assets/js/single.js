@@ -10,8 +10,8 @@ var getRepoName = function(){
   // use split() to the split the querry parameter , get the name of the repo which will be in index 1
   var repoName =queryString.split("=")[1];
 
-  getRepoIssues(repoName);
-  repoNameEl.textContent = repoName;
+
+
 
   if (repoName){
     repoNameEl.textContent = repoName;
@@ -108,5 +108,5 @@ var dispalyWarning = function(repo){
 };
 
 //
-// getRepoIssues();
+
 getRepoName();
